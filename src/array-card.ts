@@ -15,8 +15,10 @@ import type { ArrayCardConfig } from './types';
 import { actionHandler } from './action-handler-directive';
 import { CARD_VERSION } from './const';
 import { localize } from './localize/localize';
+import {Log} from './utilities/logger'
 
 /* eslint no-console: 0 */
+Log("test", null);
 console.info(
   `%c  Array-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
   'color: orange; font-weight: bold; background: black',
