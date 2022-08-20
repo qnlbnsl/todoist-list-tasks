@@ -49,6 +49,10 @@ export class ArrayCardEditor extends ScopedRegistryHost(LitElement) implements L
     return this._config?.entity || '';
   }
 
+  get _projects(): any  {
+    return this._config?.projects || null;
+  }
+
   get _show_warning(): boolean {
     return this._config?.show_warning || false;
   }

@@ -313,6 +313,58 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
+"@interactjs/actions@1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@interactjs/actions/-/actions-1.10.3.tgz#eb92d45079ccad9c5c4e407f0cdd29ec318ebebf"
+  integrity sha512-Nvs0w1fk1LTKGyz091xpZMohM51ZxthSldxX+e6Jx56JlP3l6e+AnehMUxmkydu1tCipXafIRlcLulYtEEHeFA==
+  optionalDependencies:
+    "@interactjs/interact" "1.10.3"
+
+"@interactjs/auto-start@1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@interactjs/auto-start/-/auto-start-1.10.3.tgz#3c1c7edf282ec6132f39cda80dd01124e3c7ab10"
+  integrity sha512-LRjCZDY0apfSOM3yRsj71cIZ93XIHLscT88vBId9YStmaHaTDN4QM0/C2ndUFBEdmhrgPBJI0xGwyZkSdIfFvw==
+  optionalDependencies:
+    "@interactjs/interact" "1.10.3"
+
+"@interactjs/core@1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@interactjs/core/-/core-1.10.3.tgz#ee4a01584820ccc491ad1a65296e00ecf1a7d50f"
+  integrity sha512-AWhh8v5A5xKA0iSbqMKFDIhbG+I4khrALB5EPnaKS04ai+1jGumCafolwlZjGrmdiZoz9tcwwvtayGBwSxFzBw==
+
+"@interactjs/interact@1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@interactjs/interact/-/interact-1.10.3.tgz#8777abaccf1a62f23f56dab70ddf6f605670e26f"
+  integrity sha512-mDGUjSICG2/ghqYLHDhpjywmmRjgfZ5O0rp7ozxZSYZzb53F9MuifEcVmoUoRXNWkukdC3+USpCvIEOrDMPaRw==
+  dependencies:
+    "@interactjs/core" "1.10.3"
+    "@interactjs/types" "1.10.3"
+    "@interactjs/utils" "1.10.3"
+
+"@interactjs/modifiers@1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@interactjs/modifiers/-/modifiers-1.10.3.tgz#b3be2b44c6b0d7800ff583ce779123d40f212900"
+  integrity sha512-YclbeOzuvZ9OvWO+Un3hiEfui6OqjsvMiTAyOiSJ6y5i6YbrvgIRiH/ye27WMIkaCeP660JPdE92vlMc6oQzoQ==
+  dependencies:
+    "@interactjs/snappers" "1.10.3"
+  optionalDependencies:
+    "@interactjs/interact" "1.10.3"
+
+"@interactjs/snappers@1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@interactjs/snappers/-/snappers-1.10.3.tgz#85a8ba6d0b813463641b70dc336d640807239d59"
+  integrity sha512-7zz7emrxsS9a30ct/s8AW2H4rBinnCjGfoPuBBOn1VkfGofEiyMJ8iTMXx/UPSTvJ1/TcbuQxPQg9F2MjwGp0w==
+
+"@interactjs/types@1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@interactjs/types/-/types-1.10.3.tgz#1f22a4b369b1cac7fd4d1d57ced586aa6f836553"
+  integrity sha512-O4j/Iq8Xko0cv4WfNFMciVVSw1xROXaegd1hwZVCliuIA70b59iU++i3SyzygV4ZT1MuLjqtSUd0kHm5va+a8A==
+
+"@interactjs/utils@1.10.3":
+  version "1.10.3"
+  resolved "https://registry.yarnpkg.com/@interactjs/utils/-/utils-1.10.3.tgz#8bdde33d9e2434a6b44f8b6a70fd0dfd9c386713"
+  integrity sha512-HrBPT7xRVSG4e0sxNmtHEeYG/atqDZrWmdvuFVcgehR2LlLR0yjllvH+X6FtILXiSbBKJmj00N/yorDz9FzVLA==
+
 "@lit-labs/scoped-registry-mixin@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@lit-labs/scoped-registry-mixin/-/scoped-registry-mixin-1.0.0.tgz#00d640105618fcbc6fd654f2956b5faa44452124"
@@ -776,6 +828,27 @@
     "@material/theme" "14.0.0-canary.261f2db59.0"
     tslib "^2.1.0"
 
+"@momentum-ui/web-components@^2.7.2":
+  version "2.7.2"
+  resolved "https://registry.yarnpkg.com/@momentum-ui/web-components/-/web-components-2.7.2.tgz#ea4bd2acfe487b2d89b543671a702db3259bf0c1"
+  integrity sha512-luI5VzkD/CbQf/ldOspzUKZAW725JtpxvBItq3JL/9DPl5tNCya5ZmfiekWzchVGZqNjMkm+FfycOHkKcLzXOQ==
+  dependencies:
+    "@interactjs/actions" "1.10.3"
+    "@interactjs/auto-start" "1.10.3"
+    "@interactjs/interact" "1.10.3"
+    "@interactjs/modifiers" "1.10.3"
+    "@popperjs/core" "^2.4.4"
+    country-codes-list "^1.6.8"
+    country-flags-svg "1.1.4"
+    dompurify "^2.2.6"
+    highlight.js "^10.5.0"
+    json "^11.0.0"
+    libphonenumber-js "^1.7.57"
+    luxon "^1.25.0"
+    nanoid "^3.1.16"
+    papaparse "^5.3.0"
+    sortablejs "^1.13.0"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -796,6 +869,11 @@
   dependencies:
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
+
+"@popperjs/core@^2.4.4":
+  version "2.11.6"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.6.tgz#cee20bd55e68a1720bdab363ecf0c821ded4cd45"
+  integrity sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==
 
 "@rollup/plugin-json@^4.1.0":
   version "4.1.0"
@@ -1186,6 +1264,16 @@ convert-source-map@^1.7.0:
   dependencies:
     safe-buffer "~5.1.1"
 
+country-codes-list@^1.6.8:
+  version "1.6.8"
+  resolved "https://registry.yarnpkg.com/country-codes-list/-/country-codes-list-1.6.8.tgz#c6ff506d3c0511f645fdc0997d0b4fa6773d043e"
+  integrity sha512-wsqH44Yx3pTyPA77jYt2Nxso6kXziMwxI37fJFQLcd/3ome8Gqz6areaeG1w8zfeU9i+cZvJA3k2Mo5EW7rAtg==
+
+country-flags-svg@1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/country-flags-svg/-/country-flags-svg-1.1.4.tgz#3592e0f633942b752594d90538c45e38ad963f81"
+  integrity sha512-wScnUSSB5xx86b9vLIGFZoCxox3+Qf+vaP7Cn/Da2plmwiVYsiKsFqHUnHafzKh4bkNDLqth9IWUE9rfFJVMCQ==
+
 cross-spawn@^7.0.2:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
@@ -1275,6 +1363,11 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
+
+dompurify@^2.2.6:
+  version "2.3.10"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.10.tgz#901f7390ffe16a91a5a556b94043314cd4850385"
+  integrity sha512-o7Fg/AgC7p/XpKjf/+RC3Ok6k4St5F7Q6q6+Nnm3p2zGWioAY6dh0CbbuwOhH2UcSzKsdniE/YnE2/92JcsA+g==
 
 electron-to-chromium@^1.3.857:
   version "1.3.860"
@@ -1840,6 +1933,11 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+highlight.js@^10.5.0:
+  version "10.7.3"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-10.7.3.tgz#697272e3991356e40c3cac566a74eef681756531"
+  integrity sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==
+
 home-assistant-js-websocket@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/home-assistant-js-websocket/-/home-assistant-js-websocket-5.1.0.tgz#052d2b6cd0f3fdfd3fabda36555e660351d7efe6"
@@ -2155,6 +2253,11 @@ json5@^2.1.2:
   dependencies:
     minimist "^1.2.5"
 
+json@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/json/-/json-11.0.0.tgz#2e84493134e2f42c131165aa22a124df38b3a3ee"
+  integrity sha512-N/ITv3Yw9Za8cGxuQqSqrq6RHnlaHWZkAFavcfpH/R52522c26EbihMxnY7A1chxfXJ4d+cEFIsyTgfi9GihrA==
+
 jsonfile@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/jsonfile/-/jsonfile-4.0.0.tgz#8771aae0799b64076b76640fca058f9c10e33ecb"
@@ -2174,6 +2277,11 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
+
+libphonenumber-js@^1.7.57:
+  version "1.10.13"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.13.tgz#0b5833c7fdbf671140530d83531c6753f7e0ea3c"
+  integrity sha512-b74iyWmwb4GprAUPjPkJ11GTC7KX4Pd3onpJfKxYyY8y9Rbb4ERY47LvCMEDM09WD3thiLDMXtkfDK/AX+zT7Q==
 
 lit-element@3.1.2, lit-element@^3.2.0:
   version "3.1.2"
@@ -2251,6 +2359,11 @@ lru-cache@^6.0.0:
   dependencies:
     yallist "^4.0.0"
 
+luxon@^1.25.0:
+  version "1.28.0"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.28.0.tgz#e7f96daad3938c06a62de0fb027115d251251fbf"
+  integrity sha512-TfTiyvZhwBYM/7QdAVDh+7dBTBA29v4ik0Ce9zda3Mnf8on1S5KJI8P2jKFZ8+5C0jhmr0KwJEO/Wdpm0VeWJQ==
+
 magic-string@^0.25.2:
   version "0.25.7"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.7.tgz#3f497d6fd34c669c6798dcb821f2ef31f5445051"
@@ -2327,6 +2440,11 @@ ms@^2.1.1:
   version "2.1.3"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.3.tgz#574c8138ce1d2b5861f0b44579dbadd60c6615b2"
   integrity sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
+
+nanoid@^3.1.16:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
+  integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
 natural-compare@^1.4.0:
   version "1.4.0"
@@ -2452,6 +2570,11 @@ p-try@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
+
+papaparse@^5.3.0:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/papaparse/-/papaparse-5.3.2.tgz#d1abed498a0ee299f103130a6109720404fbd467"
+  integrity sha512-6dNZu0Ki+gyV0eBsFKJhYr+MdQYAzFUGlBMNj3GNrmHxmz1lfRa24CjFObPXtjcetlOv5Ad299MhIK0znp3afw==
 
 parent-module@^1.0.0:
   version "1.0.1"
@@ -2804,6 +2927,11 @@ slice-ansi@^4.0.0:
     ansi-styles "^4.0.0"
     astral-regex "^2.0.0"
     is-fullwidth-code-point "^3.0.0"
+
+sortablejs@^1.13.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.0.tgz#53230b8aa3502bb77a29e2005808ffdb4a5f7e2a"
+  integrity sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==
 
 source-map-support@~0.5.20:
   version "0.5.20"

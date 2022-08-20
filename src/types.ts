@@ -18,4 +18,23 @@ export interface ArrayCardConfig extends LovelaceCardConfig {
   tap_action?: ActionConfig;
   hold_action?: ActionConfig;
   double_tap_action?: ActionConfig;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  projects: any;
 }
+export interface Task {
+  id: string;
+  content: string;
+  is_overdue: boolean;
+  recurring: boolean;
+  due_date: Date;
+  create_date: Date;
+}
+
+// interface isTaskList {
+//   project_name: string;
+//   tasks: Array<isTask>;
+// }
+
+// export interface IsProjectList {
+//   projects: Array<isTaskList>;
+// }

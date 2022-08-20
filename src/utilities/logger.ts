@@ -3,7 +3,7 @@
  * @param  {any} log
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const Log = (log: unknown, level: ('info'| 'debug' | 'warn' | 'error' | null )) => {
+export const Log = (log: unknown, level: ('info'| 'debug' | 'warn' | 'error' | null ) = null) => {
   switch (level) {
     case 'info' :
       console.info(log);

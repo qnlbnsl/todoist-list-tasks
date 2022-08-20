@@ -4,28 +4,26 @@ import { customElement, property, state } from 'lit/decorators';
 import {
   HomeAssistant,
   hasConfigOrEntityChanged,
-  hasAction,
   ActionHandlerEvent,
   handleAction,
   LovelaceCardEditor,
   getLovelace,
 } from 'custom-card-helpers'; // This is a community maintained npm module with common helper functions/types. https://github.com/custom-cards/custom-card-helpers
 
-import type { ArrayCardConfig } from './types';
-import { actionHandler } from './action-handler-directive';
+import type { ArrayCardConfig, Task } from './types';
 import { CARD_VERSION } from './const';
 import { localize } from './localize/localize';
-import {Log} from './utilities/logger'
+import { Log } from './utilities/logger';
+import { HaWrapper } from './utilities/formatter';
 
-/* eslint no-console: 0 */
-Log("test", null);
 console.info(
   `%c  Array-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray',
 );
 
-// This puts your card into the UI card picker dialog
+// This puts your card into the UI card picker.
+// Grabs customCards from HA's DOM or initializes it.
 (window as any).customCards = (window as any).customCards || [];
 (window as any).customCards.push({
   type: 'array-card',
@@ -33,25 +31,33 @@ console.info(
   description: 'A custom card for you to pass in an array as an attribute with a sensor',
 });
 
-// TODO Name your custom element
+// Defines out custom element by extending LitElement Library.
+// TypeScript version of window.customElements.define.
 @customElement('array-card')
 export class ArrayCard extends LitElement {
+  // Adds the editor card ui. I think this function is a part of hassio lovelace.
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
     await import('./editor');
     return document.createElement('array-card-editor');
   }
 
+  // TODO: Figure out what this does
   public static getStubConfig(): Record<string, unknown> {
     return {};
   }
 
-  // TODO Add any properities that should cause your element to re-render here
+  // TODO: Add any properities that should cause your element to re-render.
+  // TODO: Find out how this works and how do I access the hass object.
   // https://lit.dev/docs/components/properties/
   @property({ attribute: false }) public hass!: HomeAssistant;
 
+  // Defines the state of teh custom element as config.
+  // TODO: what is '!' ?
+  // Typescript state. Lit will check if this changes.
   @state() private config!: ArrayCardConfig;
 
   // https://lit.dev/docs/components/properties/#accessors-custom
+  // Set the config. When
   public setConfig(config: ArrayCardConfig): void {
     // TODO Check for required fields and that they are of the proper format
     if (!config) {
@@ -63,8 +69,8 @@ export class ArrayCard extends LitElement {
     }
 
     this.config = {
-      name: 'Array',
       ...config,
+      name: 'Array',
     };
   }
 
@@ -87,19 +93,10 @@ export class ArrayCard extends LitElement {
     if (this.config.show_error) {
       return this._showError(localize('common.show_error'));
     }
+    // I need to understand why this works...
+    this.config.projects = getProjectData(this.hass, this.config.entity as keyof typeof this.hass);
 
-    return html`
-      <ha-card
-        .header=${this.config.name}
-        @action=${this._handleAction}
-        .actionHandler=${actionHandler({
-          hasHold: hasAction(this.config.hold_action),
-          hasDoubleClick: hasAction(this.config.double_tap_action),
-        })}
-        tabindex="0"
-        .label=${`Array: ${this.config.entity || 'No Entity Defined'}`}
-      ></ha-card>
-    `;
+    return HaWrapper(this.config);
   }
 
   private _handleAction(ev: ActionHandlerEvent): void {
@@ -125,6 +122,12 @@ export class ArrayCard extends LitElement {
 
   // https://lit.dev/docs/components/styles/
   static get styles(): CSSResultGroup {
+    // CSS goes here...
     return css``;
   }
 }
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const getProjectData = (hass: HomeAssistant, entity: string) => hass.states[entity].attributes.projects;
+
+
