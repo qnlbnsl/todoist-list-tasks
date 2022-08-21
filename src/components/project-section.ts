@@ -4,7 +4,9 @@ import { IncomingTask } from "../types";
 import { Log } from "../utilities/logger";
 
 import "./task-list"
-// _tasks: { [key: string]: IncomingTask }
+// This component renders the body of the Task List. Just a container.
+// Mainly there for the heading.
+// TODO: Do i need this?!?!?!
 
 @customElement("project-section")
 export class ProjectSection extends LitElement {

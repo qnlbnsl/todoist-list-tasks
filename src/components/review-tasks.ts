@@ -4,6 +4,7 @@ import { IncomingTask, Projects } from '../types';
 import { Log } from '../utilities/logger';
 import './project-section';
 
+// Full Wrapper for the card.
 @customElement("review-tasks")
 export class ReviewTasks extends LitElement {
   @state()

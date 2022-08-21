@@ -4,8 +4,7 @@ import { IncomingTask } from "../types";
 import { Log } from "../utilities/logger";
 import { toTaskModel } from "../utilities/modelConverter";
 
-// _tasks: { [key: string]: IncomingTask }
-
+// This component renders an unordered list of tasks
 @customElement("task-list")
 export class TaskList extends LitElement {
   // Non Null, will make sure that no undefined tasks are passed in ever.
