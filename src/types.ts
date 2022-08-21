@@ -18,23 +18,46 @@ export interface ArrayCardConfig extends LovelaceCardConfig {
   tap_action?: ActionConfig;
   hold_action?: ActionConfig;
   double_tap_action?: ActionConfig;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  projects: any;
+  projects: Projects;
 }
-export interface Task {
-  id: string;
+export interface TaskModel {
+  id: number;
   content: string;
   is_overdue: boolean;
   recurring: boolean;
-  due_date: Date;
+  due_date: Date | undefined;
   create_date: Date;
 }
 
-// interface isTaskList {
-//   project_name: string;
-//   tasks: Array<isTask>;
-// }
+export interface Projects {
+  business: { [key: string]: IncomingTask };
+  school:   { [key: string]: IncomingTask };
+  work:     { [key: string]: IncomingTask };
+  personal: { [key: string]: IncomingTask };
+}
 
-// export interface IsProjectList {
-//   projects: Array<isTaskList>;
-// }
+export interface IncomingTask {
+  id:            number;
+  assigner:      number;
+  project_id:    number;
+  section_id:    number;
+  order:         number;
+  content:       string;
+  description:   string;
+  completed:     boolean;
+  label_ids:     unknown[];
+  priority:      number;
+  comment_count: number;
+  creator:       number;
+  created:       string;
+  url:           string;
+  due?:          Due;
+}
+
+export interface Due {
+  recurring: boolean;
+  string:    string;
+  date:      string;
+  datetime?: string;
+  timezone?: string;
+}

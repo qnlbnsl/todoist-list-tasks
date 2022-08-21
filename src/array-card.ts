@@ -10,11 +10,10 @@ import {
   getLovelace,
 } from 'custom-card-helpers'; // This is a community maintained npm module with common helper functions/types. https://github.com/custom-cards/custom-card-helpers
 
-import type { ArrayCardConfig, Task } from './types';
+import type { ArrayCardConfig, Projects } from './types';
 import { CARD_VERSION } from './const';
 import { localize } from './localize/localize';
-import { Log } from './utilities/logger';
-import { HaWrapper } from './utilities/formatter';
+import './components/ha-wrapper';
 
 console.info(
   `%c  Array-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
@@ -47,17 +46,36 @@ export class ArrayCard extends LitElement {
   }
 
   // TODO: Add any properities that should cause your element to re-render.
-  // TODO: Find out how this works and how do I access the hass object.
-  // https://lit.dev/docs/components/properties/
-  @property({ attribute: false }) public hass!: HomeAssistant;
+  /**
+   * https://lit.dev/docs/components/properties/
+   * @property is a typescript tag that is used to define a property.
+   * It takes in the option for attribute.
+   * When false, the property decaled will not be observed. If true then the property will be observed.
+   *    NOTE: the default is to convert the attribute to lower case
+   *    eg: MyProp would be myprop
+   * Atttribute can also be set to string to override the observed proeprty name.
+   *    eg: MyProp's default myprop can be overrriden {Attribute: 'my-prop'}
+   * The `!` is a "Non Null Assertion Operator"
+   * Basically states that hass will never be null so ignore the possibility.
+   * Mainly for typescript to stop complaining.
+   */
+  @property({ attribute: false })
+  public hass!: HomeAssistant;
 
   // Defines the state of teh custom element as config.
-  // TODO: what is '!' ?
-  // Typescript state. Lit will check if this changes.
-  @state() private config!: ArrayCardConfig;
+  // Typescript state. Lit will check if the value changes.
+  /**
+   * Lit also supports "internal reactive state".
+   * Internal reactive state refers to reactive properties that
+   * aren't part of the component's API. These properties don't
+   * have a corresponding attribute, and are typically marked
+   * protected or private in TypeScript.
+   */
+  @state()
+  private config!: ArrayCardConfig;
 
   // https://lit.dev/docs/components/properties/#accessors-custom
-  // Set the config. When
+  // Set the config. When and how is this being called?
   public setConfig(config: ArrayCardConfig): void {
     // TODO Check for required fields and that they are of the proper format
     if (!config) {
@@ -93,10 +111,14 @@ export class ArrayCard extends LitElement {
     if (this.config.show_error) {
       return this._showError(localize('common.show_error'));
     }
-    // I need to understand why this works...
+
     this.config.projects = getProjectData(this.hass, this.config.entity as keyof typeof this.hass);
 
-    return HaWrapper(this.config);
+    return html`
+      <ha-card>
+        <review-tasks .projects="${this.config.projects}"></review-tasks>
+      </ha-card>
+    `;
   }
 
   private _handleAction(ev: ActionHandlerEvent): void {
@@ -128,6 +150,8 @@ export class ArrayCard extends LitElement {
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const getProjectData = (hass: HomeAssistant, entity: string) => hass.states[entity].attributes.projects;
-
+const getProjectData = (hass: HomeAssistant, entity: string): Projects => {
+  console.log('Getting Project Data');
+  return hass.states[entity].attributes.projects;
+};
 

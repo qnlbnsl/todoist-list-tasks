@@ -1,6 +1,6 @@
 import { html, TemplateResult } from "lit";
-import { ArrayCardConfig, Task } from "../types";
-import { Log } from "./logger";
+import { ArrayCardConfig, TaskModel } from "../types";
+import { Log } from "../utilities/logger";
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const HaWrapper = (config: ArrayCardConfig): TemplateResult =>  {
@@ -44,12 +44,13 @@ const buildTaskList = (project: any, key: string): HTMLElement => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const formatTask = (task: any): HTMLLIElement => {
+  Log(task)
   const due_date: Date = new Date(task?.due?.dateTime) || null;
   const current_date: Date = new Date();
   const is_overdue = current_date < due_date ? false : true;
   const recurring = task.due?.recurring || false;
 
-  const formatted_task: Task = {
+  const formatted_task: TaskModel = {
     id: task.id,
     content: task.content,
     is_overdue: is_overdue,
@@ -69,10 +70,3 @@ const isEmpty = (obj): boolean =>  {
   return Object.keys(obj).length === 0;
 }
 
-
-const projectNameElement = (projectKey: string): HTMLElement => {
-
-  const element = document.createElement('div')
-  element.innerHTML = projectKey
-  return element
-}
