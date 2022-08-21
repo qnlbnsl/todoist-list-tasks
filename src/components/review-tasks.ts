@@ -4,7 +4,7 @@ import { IncomingTask, Projects } from '../types';
 import { Log } from '../utilities/logger';
 import './project-section';
 
-// Full Wrapper for the card.
+// Full Wrapper for the card. The main body.
 @customElement("review-tasks")
 export class ReviewTasks extends LitElement {
   @state()
@@ -14,8 +14,11 @@ export class ReviewTasks extends LitElement {
   static get styles(): CSSResultGroup {
       // CSS goes here...
       return css`
-      :host {
-        display: flex;
+      /* :host {
+        display: table-cell
+      } */
+      div {
+        display: table-cell
       }
       `;
   }

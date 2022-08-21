@@ -13,7 +13,7 @@ import {
 import type { ArrayCardConfig, Projects } from './types';
 import { CARD_VERSION } from './const';
 import { localize } from './localize/localize';
-import './components/ha-wrapper';
+import './components/review-tasks';
 
 console.info(
   `%c  Array-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
