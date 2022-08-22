@@ -67,25 +67,26 @@ export class TaskList extends LitElement {
    * @returns number The index at which we stop rendering any more tasks
    */
   getTaskEnd = (currentListIndex: number): number => {
-    return this.getTaskStart(currentListIndex) + this.maxTasksPerList - 1;
+    const end = this.getTaskStart(currentListIndex) + this.maxTasksPerList - 1;
+    if (end > this.numberOfTasks) return this.numberOfTasks
+    return end;
   };
 
   private buildTaskList(tasks: { [key: string]: IncomingTask }): void {
     Log("Setting up Task List raw data")
     const taskIds = Object.keys(tasks);
-    Log(taskIds)
     for (let i = 0; i < this.numberOfLists(); i++) {
       // i is analogous to the current list
       this.taskList[i] = [];
-      Log(`${i} top for loop`)
-      Log(this.taskList[i])
+      Log(`Loop #${i}`)
       for (let j = this.getTaskStart(i); j <= this.getTaskEnd(i); j++) {
-        // Log(`${i}:${j} Second for loop`)
-        Log(this.taskList[i])
-        this.taskList.push([i, Number(taskIds[j])])
-        Log(`${i}:${j} After Push`)
-        Log(this.taskList[i])
+        const id = Number(taskIds[j])
+        this.taskList.push([i, id])
+        Log({i, id})
+        Log(`Sub Loop #${i}:${j}`)
       }
+      Log("Sub Loop finished")
+      Log(this.taskList[i])
     }
     Log(this.taskList)
   }

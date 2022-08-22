@@ -18,7 +18,6 @@ export class ProjectSection extends LitElement {
 
   // https://lit.dev/docs/components/styles/
   static get styles(): CSSResultGroup {
-    // CSS goes here...
     return css`
       div {
         color: white;
