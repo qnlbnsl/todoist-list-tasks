@@ -68,7 +68,7 @@ export class TaskList extends LitElement {
    */
   getTaskEnd = (currentListIndex: number): number => {
     const end = this.getTaskStart(currentListIndex) + this.maxTasksPerList - 1;
-    if (end > this.numberOfTasks) return this.numberOfTasks
+    if (end > this.numberOfTasks) return this.numberOfTasks-1
     return end;
   };
 
@@ -77,25 +77,14 @@ export class TaskList extends LitElement {
     const taskIds = Object.keys(tasks);
     for (let i = 0; i < this.numberOfLists(); i++) {
       // i is analogous to the current list
-      this.taskList[i] = [];
-      Log(`Loop #${i}`)
+      this.taskList[i] = []
+      // Log(`Loop #${i}`)
       for (let j = this.getTaskStart(i); j <= this.getTaskEnd(i); j++) {
         const id = Number(taskIds[j])
-        this.taskList.push([i, id])
-        Log({i, id})
-        Log(`Sub Loop #${i}:${j}`)
+        this.taskList[i].push(id)
       }
-      Log("Sub Loop finished")
-      Log(this.taskList[i])
     }
     Log(this.taskList)
-  }
-
-  private buildList(currentListIndex: number) {
-    Log("Building Task List Template")
-    this.taskList[currentListIndex].forEach((task) => {
-      return html `${this._taskCard(this.tasks[String(task)])}`
-    });
   }
 
   /**
@@ -103,7 +92,9 @@ export class TaskList extends LitElement {
    * @param  {IncomingTask} task Raw data for the task
    */
   private _taskCard(task: IncomingTask) {
+    // Log(task)
     const formatted_task = toTaskModel(task);
+    Log(formatted_task)
     return html`<li>${formatted_task.content}</li>`;
   }
   // https://lit.dev/docs/components/styles/
@@ -125,7 +116,9 @@ export class TaskList extends LitElement {
 
     return html`
       <ul>
-        ${html `${this.buildList(this.currentListIndex)}`}
+        ${this.taskList[this.currentListIndex].forEach((task) =>{
+          return html `${this._taskCard(this.tasks[String(task)])}`
+        })}
       </ul>
     `;
   }
