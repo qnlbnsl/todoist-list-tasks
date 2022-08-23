@@ -3,18 +3,18 @@ import { LitElement, html, TemplateResult, css, CSSResultGroup } from 'lit';
 import { HomeAssistant, fireEvent, LovelaceCardEditor } from 'custom-card-helpers';
 
 import { ScopedRegistryHost } from '@lit-labs/scoped-registry-mixin';
-import { ArrayCardConfig } from './types';
+import { TodoCardConfig } from './types';
 import { customElement, property, state } from 'lit/decorators';
 import { formfieldDefinition } from '../elements/formfield';
 import { selectDefinition } from '../elements/select';
 import { switchDefinition } from '../elements/switch';
 import { textfieldDefinition } from '../elements/textfield';
 
-@customElement('array-card-editor')
-export class ArrayCardEditor extends ScopedRegistryHost(LitElement) implements LovelaceCardEditor {
+@customElement('todo-card-editor')
+export class TodoCardEditor extends ScopedRegistryHost(LitElement) implements LovelaceCardEditor {
   @property({ attribute: false }) public hass?: HomeAssistant;
 
-  @state() private _config?: ArrayCardConfig;
+  @state() private _config?: TodoCardConfig;
 
   @state() private _helpers?: any;
 
@@ -27,7 +27,7 @@ export class ArrayCardEditor extends ScopedRegistryHost(LitElement) implements L
     ...formfieldDefinition,
   };
 
-  public setConfig(config: ArrayCardConfig): void {
+  public setConfig(config: TodoCardConfig): void {
     this._config = config;
 
     this.loadCardHelpers();

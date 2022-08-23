@@ -2,13 +2,13 @@ import { ActionConfig, LovelaceCard, LovelaceCardConfig, LovelaceCardEditor } fr
 
 declare global {
   interface HTMLElementTagNameMap {
-    'array-card-editor': LovelaceCardEditor;
+    'todo-card-editor': LovelaceCardEditor;
     'hui-error-card': LovelaceCard;
   }
 }
 
 // TODO Add your configuration elements here for type-checking
-export interface ArrayCardConfig extends LovelaceCardConfig {
+export interface TodoCardConfig extends LovelaceCardConfig {
   type: string;
   name?: string;
   show_warning?: boolean;
@@ -18,7 +18,6 @@ export interface ArrayCardConfig extends LovelaceCardConfig {
   tap_action?: ActionConfig;
   hold_action?: ActionConfig;
   double_tap_action?: ActionConfig;
-  projects: Projects;
 }
 export interface TaskModel {
   id: number;

@@ -25,8 +25,6 @@ export class TaskList extends LitElement {
   // EG: [1]["1","2","3", "4"],[2]["5","6","7", "8"]
   @property({type: Array})  private taskList: number[][] = []//this.buildTaskList(this.tasks);
 
-
-
   /**
    * updates teh current list index to show the next set of tasks
    * An update causes a rerender
@@ -37,9 +35,10 @@ export class TaskList extends LitElement {
     if (this.currentListIndex == this.numberOfLists()) {
       this.currentListIndex = 0;
     } else this.currentListIndex++;
-    console.log(this.currentListIndex)
+    console.log(`UpdateIndex: Current Index -> ${this.currentListIndex}`)
     this.requestUpdate();
   }
+
   /**
    * Returns the number of lists required to show all tasks at least once
    * @returns number
@@ -47,6 +46,7 @@ export class TaskList extends LitElement {
   numberOfLists(): number {
     return Math.ceil(this.numberOfTasks / this.maxTasksPerList);
   }
+
   /**
    * This function updates the list index after a set amount of time
    * The update results in a re-render of the component
@@ -57,7 +57,7 @@ export class TaskList extends LitElement {
     setTimeout(() => {
       console.log("Task-List:UpdateList->updating......")
       this._updateIndex();
-    }, 10000);
+    }, 30000);
   };
 
   /**
@@ -67,6 +67,7 @@ export class TaskList extends LitElement {
   getTaskStart = (currentListIndex: number): number => {
     return currentListIndex * this.maxTasksPerList;
   };
+
   // Gets the stop index for the current list
   /**
    * @param  {number} currentListIndex Starts at 0
@@ -78,6 +79,10 @@ export class TaskList extends LitElement {
     return end;
   };
 
+  /**
+   * @param  {{[key:string]:IncomingTask}} tasks
+   * @returns number
+   */
   private buildTaskList(tasks: { [key: string]: IncomingTask }): number[][] {
     const list: number[][] = [];
     console.log(`Task-List:BuildTaskList-> Setting up Task List raw data for ${this.numberOfLists()} lists `)
@@ -107,7 +112,20 @@ export class TaskList extends LitElement {
     // console.log(formatted_task)
     return html`<li>${formatted_task.content}</li>`;
   }
-  // https://lit.dev/docs/components/styles/
+
+  /**
+   * @returns TemplateResult
+   */
+  test = (): TemplateResult => {
+      console.log(this.taskList[this.currentListIndex])
+      return html `${this.taskList[this.currentListIndex].map((task) => {
+        console.log(`Task-List:Render()-> ${task}`)
+        return html `${this._taskCard(this.tasks[String(task)])}`
+    })}`}
+
+  /**
+   * @returns CSSResultGroup
+   */
   static get styles(): CSSResultGroup {
     // CSS goes here...
     return css`
@@ -121,6 +139,9 @@ export class TaskList extends LitElement {
     `;
   }
 
+  /**
+   * @returns TemplateResult
+   */
   protected render(): TemplateResult | void {
     this.TaskListBuilt ? null : this.taskList = this.buildTaskList(this.tasks)
     // console.log(`Task-List: Autoplay is set to: ${this.taskAutoplay}`)
@@ -128,14 +149,7 @@ export class TaskList extends LitElement {
     // debugger;
     return html`
       <ul>
-
-            ${this.taskList[this.currentListIndex].map((task) => {
-              console.log(`Task-List:Render()->`)
-              console.log(task)
-              return html `${this._taskCard(this.tasks[String(task)])}`
-              })}
-
-
+            ${this.test()}
       </ul>
     `;
   }

@@ -41,7 +41,7 @@ const plugins = [
 
 export default [
   {
-    input: 'src/array-card.ts',
+    input: 'src/todo-card.ts',
     output: {
       dir: 'release',
       format: 'es',

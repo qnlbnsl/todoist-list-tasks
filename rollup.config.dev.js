@@ -28,7 +28,7 @@ const plugins= [
   typescript({ sourceMap: true, inlineSources: true }),
   json(),
   babel({
-    exclude: 'node_modules/**',
+    exclude: ['node_modules/**','sample-data/**'],
     inputSourceMap: true,
   }),
   terser(),
@@ -40,7 +40,7 @@ const plugins= [
   ]
 
 export default {
-  input: ['src/array-card.ts'],
+  input: ['src/todo-card.ts'],
   output: {
     sourcemap: true,
     dir: './dist',

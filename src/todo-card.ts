@@ -10,14 +10,13 @@ import {
   getLovelace,
 } from 'custom-card-helpers'; // This is a community maintained npm module with common helper functions/types. https://github.com/custom-cards/custom-card-helpers
 // import "reflect-metadata";
-
-import type { ArrayCardConfig, Projects } from './types';
+import type { TodoCardConfig, Projects } from './types';
 import { CARD_VERSION } from './const';
 import { localize } from './localize/localize';
-import './components/review-tasks';
+import './components/task-card';
 
 console.info(
-  `%c  Array-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
+  `%c  todo-task-card \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray',
 );
@@ -26,23 +25,29 @@ console.info(
 // Grabs customCards from HA's DOM or initializes it.
 (window as any).customCards = (window as any).customCards || [];
 (window as any).customCards.push({
-  type: 'array-card',
-  name: 'Array Card',
+  type: 'todo-task-card',
+  name: 'Todo Task Card',
   description: 'A custom card for you to pass in an array as an attribute with a sensor',
 });
 
 // Defines out custom element by extending LitElement Library.
 // TypeScript version of window.customElements.define.
-@customElement('array-card')
-export class ArrayCard extends LitElement {
-  // Adds the editor card ui. I think this function is a part of hassio lovelace.
+@customElement('todo-card')
+export class TodoCard extends LitElement {
+  /**
+   * @returns Promise
+   */
   public static async getConfigElement(): Promise<LovelaceCardEditor> {
     await import('./editor');
-    return document.createElement('array-card-editor');
+    // Adds the editor card ui. I think this function is a part of hassio lovelace.
+    return document.createElement('todo-card-editor');
   }
 
-  // TODO: Figure out what this does
+  /**
+   * @returns Record
+   */
   public static getStubConfig(): Record<string, unknown> {
+    // TODO: Figure out what this does
     return {};
   }
 
@@ -60,8 +65,15 @@ export class ArrayCard extends LitElement {
    * Basically states that hass will never be null so ignore the possibility.
    * Mainly for typescript to stop complaining.
    */
-  @property({ attribute: false })
-  public hass!: HomeAssistant;
+  @property({ attribute: false }) public hass!: HomeAssistant;
+
+  @property({
+    hasChanged(value: Projects, oldValue: Projects) {
+        if (compareProjects(oldValue, value)) return true
+        else return false
+    },
+    type: Object
+  }) projects!: Projects ;
 
   // Defines the state of teh custom element as config.
   // Typescript state. Lit will check if the value changes.
@@ -73,11 +85,15 @@ export class ArrayCard extends LitElement {
    * protected or private in TypeScript.
    */
   @state()
-  private config!: ArrayCardConfig;
+  private config!: TodoCardConfig;
 
-  // https://lit.dev/docs/components/properties/#accessors-custom
-  // Set the config. When and how is this being called?
-  public setConfig(config: ArrayCardConfig): void {
+  /**
+   * @param  {TodoCardConfig} config
+   * @returns void
+   * https://lit.dev/docs/components/properties/#accessors-custom
+   * Set the config. When and how is this being called?
+   */
+  public setConfig(config: TodoCardConfig): void {
     // TODO Check for required fields and that they are of the proper format
     if (!config) {
       throw new Error(localize('common.invalid_configuration'));
@@ -89,11 +105,15 @@ export class ArrayCard extends LitElement {
 
     this.config = {
       ...config,
-      name: 'Array',
+      name: 'Todo Card',
     };
   }
 
-  // https://lit.dev/docs/components/lifecycle/#reactive-update-cycle-performing
+  /**
+   * @param  {PropertyValues} changedProps
+   * @returns boolean
+   * https://lit.dev/docs/components/lifecycle/#reactive-update-cycle-performing
+   */
   protected shouldUpdate(changedProps: PropertyValues): boolean {
     if (!this.config) {
       return false;
@@ -101,8 +121,20 @@ export class ArrayCard extends LitElement {
 
     return hasConfigOrEntityChanged(this, changedProps, false);
   }
+  /**
+   * @param  {Map<string|number|symbol} _changedProperties
+   * @param  {} unknown>
+   * @returns void
+   */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  protected firstUpdated(_changedProperties: Map<string | number | symbol, unknown>): void {
+    this.projects = getProjectData(this.hass, this.config.entity as keyof typeof this.hass);
+  }
 
-  // https://lit.dev/docs/components/rendering/
+  /**
+   * @returns TemplateResult
+   * https://lit.dev/docs/components/rendering/
+   */
   protected render(): TemplateResult | void {
     // TODO Check for stateObj or other necessary things and render a warning if missing
     if (this.config.show_warning) {
@@ -113,25 +145,37 @@ export class ArrayCard extends LitElement {
       return this._showError(localize('common.show_error'));
     }
 
-    this.config.projects = getProjectData(this.hass, this.config.entity as keyof typeof this.hass);
+    !this.projects ? this.projects = getProjectData(this.hass, this.config.entity as keyof typeof this.hass) : null
 
     return html`
       <ha-card>
-        <review-tasks .projects="${this.config.projects}"></review-tasks>
+        <review-tasks .projects="${this.projects}"></review-tasks>
       </ha-card>
     `;
   }
 
+  /**
+   * @param  {ActionHandlerEvent} ev
+   * @returns void
+   */
   private _handleAction(ev: ActionHandlerEvent): void {
     if (this.hass && this.config && ev.detail.action) {
       handleAction(this, this.hass, this.config, ev.detail.action);
     }
   }
 
+  /**
+   * @param  {string} warning
+   * @returns TemplateResult
+   */
   private _showWarning(warning: string): TemplateResult {
     return html` <hui-warning>${warning}</hui-warning> `;
   }
 
+  /**
+   * @param  {string} error
+   * @returns TemplateResult
+   */
   private _showError(error: string): TemplateResult {
     const errorCard = document.createElement('hui-error-card');
     errorCard.setConfig({
@@ -143,16 +187,39 @@ export class ArrayCard extends LitElement {
     return html` ${errorCard} `;
   }
 
-  // https://lit.dev/docs/components/styles/
+  /**
+   * @returns CSSResultGroup
+   // https://lit.dev/docs/components/styles/
+   */
   static get styles(): CSSResultGroup {
     // CSS goes here...
     return css``;
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+/**
+ * @param  {HomeAssistant} hass
+ * @param  {string} entity
+ * @returns Projects
+ */
 const getProjectData = (hass: HomeAssistant, entity: string): Projects => {
-  console.log('Array-Card: Getting Project Data');
+  console.log('todo-task-card: Getting Project Data');
   return hass.states[entity].attributes.projects;
 };
 
+/**
+ * @param  {Projects} oldProj
+ * @param  {Projects} newProj
+ */
+const compareProjects = (oldProj: Projects, newProj: Projects) => {
+  let update = false;
+  if (!oldProj || oldProj === undefined) return true;
+  Object.keys(oldProj).forEach((project) => {
+    Object.keys(project).forEach((task) => {
+      if (oldProj.business[task] !== newProj.business[task]) {
+        update = true;
+      }
+    })
+  })
+  return update
+}

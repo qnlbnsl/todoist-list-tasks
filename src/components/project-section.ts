@@ -2,7 +2,6 @@ import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
 import { IncomingTask } from '../types';
 
-import './task-list';
 // This component renders the body of the Task List. Just a container.
 // Mainly there for the heading.
 // TODO: Do i need this?!?!?!
@@ -16,7 +15,9 @@ export class ProjectSection extends LitElement {
   private projectKey = '';
   private projectIcon = 'mdi:briefcase-clock';
 
-  // https://lit.dev/docs/components/styles/
+  /**
+   * @returns CSSResultGroup
+   */
   static get styles(): CSSResultGroup {
     return css`
       .icon {
@@ -25,9 +26,11 @@ export class ProjectSection extends LitElement {
 
     `;
   }
+  /**
+   * @returns TemplateResult
+   */
   protected render(): TemplateResult | void {
-    console.log("------------------------------------------------------------------")
-    console.log(`Rendering ${this.projectKey}`)
+    console.log("---------------------------Rendering ${this.projectKey}---------------------------------------")
     return html`
       <!-- Set this based on type of project -->
       <ha-icon id="${this.projectKey}" class="icon" icon="${this.projectIcon}"></ha-icon>
