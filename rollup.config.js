@@ -14,7 +14,7 @@ import { ignoreSwitchFiles } from './elements/ignore/switch';
 const dev = process.env.ROLLUP_WATCH;
 
 const serveopts = {
-  contentBase: ['./dist'],
+  contentBase: ['./release'],
   host: '0.0.0.0',
   port: 5000,
   allowCrossOrigin: true,
@@ -43,7 +43,7 @@ export default [
   {
     input: 'src/array-card.ts',
     output: {
-      dir: 'dist',
+      dir: 'release',
       format: 'es',
     },
     plugins: [...plugins],

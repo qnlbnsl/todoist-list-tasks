@@ -103,7 +103,6 @@ export class TaskList extends LitElement {
         color: white;
       }
       ul {
-        height: 8em;
         margin: 0px;
         align-self: center;
       }
