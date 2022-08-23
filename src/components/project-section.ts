@@ -15,38 +15,24 @@ export class ProjectSection extends LitElement {
   private tasks!: { [key: string]: IncomingTask };
   @state()
   private projectKey = '';
+  private projectIcon = 'mdi:briefcase-clock';
 
   // https://lit.dev/docs/components/styles/
   static get styles(): CSSResultGroup {
     return css`
-      div {
-        color: white;
-        display: flex;
-        position: absolute;
-        top: 25%;
-        flex-direction: column;
-        align-items: center;
-      }
       .icon {
         --mdc-icon-size: 3em;
       }
-      task-list {
-        display: flex;
-        position: absolute;
-        left: 15vw;
-        height: 100%;
-        overflow: hidden;
-      }
+
     `;
   }
   protected render(): TemplateResult | void {
+    Log(`Rendering ${this.projectKey}`)
     return html`
-      <div>
-        <ha-icon id="${this.projectKey}" class="icon" icon="mdi:briefcase-clock"></ha-icon>
-        <h1>${this.projectKey}</h1>
-      </div>
+      <!-- Set this based on type of project -->
+      <ha-icon id="${this.projectKey}" class="icon" icon="${this.projectIcon}"></ha-icon>
+      <h1>${this.projectKey}</h1>
 
-      <task-list .tasks="${this.tasks}" .numberOfTasks="${this.numberOfTasks}"></task-list>
     `;
   }
 }

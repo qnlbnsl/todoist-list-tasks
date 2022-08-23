@@ -13,7 +13,7 @@ export class TaskList extends LitElement {
   // Max tasks per list. Can be overriden by parent.
   @property({ attribute: false }) maxTasksPerList = 5;
   // Autoadvance the list or not. can be overriden by parent.
-  @property({attribute: false}) autoplay = false;
+  @property({attribute: false}) taskAutoplay = false;
   @state()
   // Non Null, will make sure that no undefined tasks are passed in ever.
   private tasks!: { [key: string]: IncomingTask };
@@ -51,7 +51,7 @@ export class TaskList extends LitElement {
   updateList = (): void => {
     setTimeout(() => {
       this._updateIndex();
-    }, 5000);
+    }, 10000);
   };
 
   /**
@@ -84,7 +84,6 @@ export class TaskList extends LitElement {
         this.taskList[i].push(id)
       }
     }
-    Log(this.taskList)
   }
 
   /**
@@ -92,9 +91,8 @@ export class TaskList extends LitElement {
    * @param  {IncomingTask} task Raw data for the task
    */
   private _taskCard(task: IncomingTask) {
-    // Log(task)
     const formatted_task = toTaskModel(task);
-    Log(formatted_task)
+    // Log(formatted_task)
     return html`<li>${formatted_task.content}</li>`;
   }
   // https://lit.dev/docs/components/styles/
@@ -105,18 +103,20 @@ export class TaskList extends LitElement {
         color: white;
       }
       ul {
-        height: 100%;
+        height: 8em;
+        margin: 0px;
+        align-self: center;
       }
     `;
   }
   protected render(): TemplateResult | void {
     this.buildTaskList(this.tasks)
-    Log(`Task-List: Autoplay is set to: ${this.autoplay}`)
-    this.autoplay ? this.updateList() : null;
+    Log(`Task-List: Autoplay is set to: ${this.taskAutoplay}`)
+    this.taskAutoplay ? this.updateList() : null;
 
     return html`
       <ul>
-        ${this.taskList[this.currentListIndex].forEach((task) =>{
+        ${this.taskList[this.currentListIndex].map((task) =>{
           return html `${this._taskCard(this.tasks[String(task)])}`
         })}
       </ul>

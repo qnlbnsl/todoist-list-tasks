@@ -4,18 +4,21 @@ import { IncomingTask, Projects } from '../types';
 import { Log } from '../utilities/logger';
 
 import './project-section';
+import './task-list'
 
 // Full Wrapper for the card. The main body.
 @customElement('review-tasks')
 export class ReviewTasks extends LitElement {
   @property({attribute: false}) projectType=["Work","School","Business","Personal"]
-  @property({attribute: false}) autoplay = false;
+  @property({attribute: false}) projectAutoplay = true;
+  @property({attribute: false}) taskAutoplay = true;
   @state()
     private projects: Projects | undefined = undefined;
     private index = 0;
     private numberOfTasksPerProject: number[] = [];
     private maxTasksPerList = 5;
-  __setVariableIndex(): void {
+
+    __setVariableIndex(): void {
     for(let i =0; i< this.projectType.length; i++){
       if(this.projects != undefined) {
         const totalTasks = Object.keys(this.projects[this.projectType[i].toLowerCase()])
@@ -41,7 +44,7 @@ export class ReviewTasks extends LitElement {
   timeout = (): void => {
     setTimeout(()=>{
       this._updateIndex();
-    }, this.numberOfLists()*5000)
+    }, this.numberOfLists()*10000)
   }
 
   // https://lit.dev/docs/components/styles/
@@ -49,18 +52,21 @@ export class ReviewTasks extends LitElement {
     // CSS goes here...
     return css`
       div {
-        height: 15vh;
-        width: 100%;
-        display: flex;
-        overflow: hidden;
+        color: white;
+        display: grid;
+        justify-content: flex-start;
+        grid-auto-flow: column;
+        gap: 4px;
+        margin-left: 2vw;
+        padding: 10px;
       }
-      .item {
-        width: 100%;
-        margin-left: 20px;
-        margin-right: 20px;
+      project-section {
+        text-align: center;
+        width: 15vw;
+        margin-top: auto;
       }
-      .hide {
-        display: none;
+      task-list {
+        padding-left: 3em;
       }
     `;
   }
@@ -69,13 +75,16 @@ export class ReviewTasks extends LitElement {
    if(index<0 || index > this.projectType.length) return null;
 
    const key = this.projectType[index]
-   return html `<project-section class="item" .numberOfTasks="${numberOfTasksPerProject[this.index]}" .projectKey="${key}" .tasks="${projects[key.toLowerCase()]}"></project-section>`
+   return html `
+   <project-section .numberOfTasks="${numberOfTasksPerProject[this.index]}" .tasks="${projects[key.toLowerCase()]}" .projectKey="${key}"></project-section>
+   <task-list .numberOfTasks="${numberOfTasksPerProject[this.index]}" .tasks="${projects[key.toLowerCase()]}" .taskAutoplay="${this.taskAutoplay}"></task-list>
+   `
   }
   protected render(): TemplateResult {
-    Log(`Review Tasks: Autoplay is set to: ${this.autoplay}`)
+    Log(`Review Tasks: Autoplay is set to: ${this.projectAutoplay}`)
     // TODO: Format this nicely.
     if (this.projects === undefined) return html` <h1>Good Job!!</h1> `;
-    this.autoplay ? this.timeout() : null
+    this.projectAutoplay ? this.timeout() : null
     this.__setVariableIndex();
     // Skip the rendering of empty projects.
     if (isEmpty(this.projects[this.projectType[this.index].toLowerCase()])) this._updateIndex()
