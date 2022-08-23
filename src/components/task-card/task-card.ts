@@ -1,9 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { IncomingTask, Projects } from '../types';
+import { IncomingTask, Projects } from '../../types';
 
-import './project-section';
-import './task-list'
+import '../project-section/project-section';
+import '../task-list/task-list'
 
 // Full Wrapper for the card. The main body.
 @customElement('task-card')

@@ -1,7 +1,7 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
-import { IncomingTask } from '../types';
-import { toTaskModel } from '../utilities/modelConverter';
+import { IncomingTask } from '../../types';
+import { toTaskModel } from '../../utilities/modelConverter';
 
 // This component renders an unordered list of tasks
 @customElement('task-list')

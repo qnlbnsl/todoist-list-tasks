@@ -13,7 +13,7 @@ import {
 import type { TodoCardConfig, Projects } from './types';
 import { CARD_VERSION } from './const';
 import { localize } from './localize/localize';
-import './components/task-card';
+import './components/task-card/task-card';
 
 console.info(
   `%c  todo-task-card \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
@@ -149,7 +149,7 @@ export class TodoCard extends LitElement {
 
     return html`
       <ha-card>
-        <review-tasks .projects="${this.projects}"></review-tasks>
+        <task-card .projects="${this.projects}"></task-card>
       </ha-card>
     `;
   }

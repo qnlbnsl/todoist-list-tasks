@@ -1,6 +1,6 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
-import { IncomingTask } from '../types';
+import { IncomingTask } from '../../types';
 
 // This component renders the body of the Task List. Just a container.
 // Mainly there for the heading.
