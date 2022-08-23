@@ -11,14 +11,13 @@ export class TaskList extends LitElement {
   private tasks!: { [key: string]: IncomingTask };
   // The index to identify currently shown range of tasks
   private currentListIndex = 0;
-  // private taskList: number[][] = this.buildTaskList(this.tasks);
   // Number of tasks in the object passed in from the parent
   // Static value.
   @property({ attribute: false }) numberOfTasks = 0;
   // Max tasks per list. Can be overriden by parent.
   @property({ attribute: false }) maxTasksPerList = 5;
-   // Max tasks per list. Can be overriden by parent.
-   @property({ attribute: false }) TaskListBuilt = false;
+  // Check if list is ready
+  @property({ attribute: false }) TaskListBuilt = false;
   // Autoadvance the list or not. can be overriden by parent.
   @property({attribute: false}) taskAutoplay = false;
   // An array to store task IDs with list index numbers.

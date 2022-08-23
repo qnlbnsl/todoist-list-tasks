@@ -3,7 +3,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { IncomingTask, Projects } from '../../types';
 
 import '../project-section/project-section';
-import '../task-list/task-list'
+import '../task-section/task-section'
 
 // Full Wrapper for the card. The main body.
 @customElement('task-card')
@@ -93,8 +93,8 @@ export class TaskCard extends LitElement {
 
    const key = this.projectType[index]
    return html `
-   <project-section .numberOfTasks="${numberOfTasksPerProject[this.index]}" .tasks="${projects[key.toLowerCase()]}" .projectKey="${key}"></project-section>
-   <task-list .numberOfTasks="${numberOfTasksPerProject[this.index]}" .tasks="${projects[key.toLowerCase()]}" .taskAutoplay="${this.taskAutoplay}"></task-list>
+   <project-section .projectKey="${key}"></project-section>
+   <task-section .numberOfTasks="${numberOfTasksPerProject[this.index]}" .tasks="${projects[key.toLowerCase()]}" .taskAutoplay="${this.taskAutoplay}"></task-section>
    `
   }
 

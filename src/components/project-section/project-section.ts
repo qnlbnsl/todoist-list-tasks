@@ -8,12 +8,9 @@ import { IncomingTask } from '../../types';
 
 @customElement('project-section')
 export class ProjectSection extends LitElement {
-  @property({attribute:false}) numberOfTasks = 0
   @state()
-  private tasks!: { [key: string]: IncomingTask };
-  @state()
-  private projectKey = '';
-  private projectIcon = 'mdi:briefcase-clock';
+    private projectKey = '';
+    private projectIcon = 'mdi:briefcase-clock';
 
   /**
    * @returns CSSResultGroup
@@ -30,7 +27,7 @@ export class ProjectSection extends LitElement {
    * @returns TemplateResult
    */
   protected render(): TemplateResult | void {
-    console.log("---------------------------Rendering ${this.projectKey}---------------------------------------")
+    console.log(`---------------------------Rendering Project: ${this.projectKey}---------------------------------------`)
     return html`
       <!-- Set this based on type of project -->
       <ha-icon id="${this.projectKey}" class="icon" icon="${this.projectIcon}"></ha-icon>
