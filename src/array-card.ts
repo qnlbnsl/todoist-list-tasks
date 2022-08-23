@@ -15,7 +15,6 @@ import type { ArrayCardConfig, Projects } from './types';
 import { CARD_VERSION } from './const';
 import { localize } from './localize/localize';
 import './components/review-tasks';
-import { Log } from './utilities/logger';
 
 console.info(
   `%c  Array-CARD \n%c  ${localize('common.version')} ${CARD_VERSION}    `,
@@ -153,7 +152,7 @@ export class ArrayCard extends LitElement {
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getProjectData = (hass: HomeAssistant, entity: string): Projects => {
-  Log('Array-Card: Getting Project Data');
+  console.log('Array-Card: Getting Project Data');
   return hass.states[entity].attributes.projects;
 };
 

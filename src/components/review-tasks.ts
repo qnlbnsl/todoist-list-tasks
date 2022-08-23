@@ -21,7 +21,7 @@ export class ReviewTasks extends LitElement {
     for(let i =0; i< this.projectType.length; i++){
       if(this.projects != undefined) {
         const totalTasks = Object.keys(this.projects[this.projectType[i].toLowerCase()])
-        // Log(totalTasks)
+        // console.log(totalTasks)
         this.numberOfTasksPerProject.push(totalTasks.length)
       }
     }
@@ -80,7 +80,7 @@ export class ReviewTasks extends LitElement {
    `
   }
   protected render = (): TemplateResult => {
-    // Log(`Review Tasks: Autoplay is set to: ${this.projectAutoplay}`)
+    // console.log(`Review Tasks: Autoplay is set to: ${this.projectAutoplay}`)
     // TODO: Format this nicely.
     if (this.projects === undefined) return html` <h1>Good Job!!</h1> `;
     this.projectAutoplay ? this.timeout() : null

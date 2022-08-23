@@ -1,7 +1,6 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
 import { IncomingTask } from '../types';
-import { Log } from '../utilities/logger';
 
 import './task-list';
 // This component renders the body of the Task List. Just a container.
@@ -27,8 +26,8 @@ export class ProjectSection extends LitElement {
     `;
   }
   protected render(): TemplateResult | void {
-    Log("------------------------------------------------------------------")
-    Log(`Rendering ${this.projectKey}`)
+    console.log("------------------------------------------------------------------")
+    console.log(`Rendering ${this.projectKey}`)
     return html`
       <!-- Set this based on type of project -->
       <ha-icon id="${this.projectKey}" class="icon" icon="${this.projectIcon}"></ha-icon>

@@ -1,7 +1,6 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
 import { IncomingTask } from '../types';
-import { Log } from '../utilities/logger';
 import { toTaskModel } from '../utilities/modelConverter';
 
 // This component renders an unordered list of tasks
@@ -34,11 +33,11 @@ export class TaskList extends LitElement {
    * @returns void
    */
   _updateIndex(): void {
-    Log('Task-List:_updateIndex-> Updating task list index');
+    console.log('Task-List:_updateIndex-> Updating task list index');
     if (this.currentListIndex == this.numberOfLists()) {
       this.currentListIndex = 0;
     } else this.currentListIndex++;
-    Log(this.currentListIndex)
+    console.log(this.currentListIndex)
     this.requestUpdate();
   }
   /**
@@ -56,7 +55,7 @@ export class TaskList extends LitElement {
    */
   updateList = (): void => {
     setTimeout(() => {
-      Log("Task-List:UpdateList->updating......")
+      console.log("Task-List:UpdateList->updating......")
       this._updateIndex();
     }, 10000);
   };
@@ -81,18 +80,18 @@ export class TaskList extends LitElement {
 
   private buildTaskList(tasks: { [key: string]: IncomingTask }): number[][] {
     const list: number[][] = [];
-    Log(`Task-List:BuildTaskList-> Setting up Task List raw data for ${this.numberOfLists()} lists `)
+    console.log(`Task-List:BuildTaskList-> Setting up Task List raw data for ${this.numberOfLists()} lists `)
     const taskIds = Object.keys(tasks);
     for (let i = 0; i < this.numberOfLists(); i++) {
       // i is analogous to the current list
       list[i] = []
-      // Log(`Loop #${i}`)
+      // console.log(`Loop #${i}`)
       for (let j = this.getTaskStart(i); j <= this.getTaskEnd(i); j++) {
         const id = Number(taskIds[j])
         list[i].push(id)
       }
     }
-    Log(`Task-List:BuildTaskList-> Returning List `)
+    console.log(`Task-List:BuildTaskList-> Returning List `)
     this.TaskListBuilt = true
     return list;
   }
@@ -102,10 +101,10 @@ export class TaskList extends LitElement {
    * @param  {IncomingTask} task Raw data for the task
    */
   private _taskCard(task: IncomingTask) {
-    Log(`Task-List:_taskCard->`)
-    Log(task)
+    console.log(`Task-List:_taskCard->`)
+    console.log(task)
     const formatted_task = toTaskModel(task);
-    // Log(formatted_task)
+    // console.log(formatted_task)
     return html`<li>${formatted_task.content}</li>`;
   }
   // https://lit.dev/docs/components/styles/
@@ -124,15 +123,15 @@ export class TaskList extends LitElement {
 
   protected render(): TemplateResult | void {
     this.TaskListBuilt ? null : this.taskList = this.buildTaskList(this.tasks)
-    // Log(`Task-List: Autoplay is set to: ${this.taskAutoplay}`)
+    // console.log(`Task-List: Autoplay is set to: ${this.taskAutoplay}`)
     this.taskAutoplay ? this.updateList() : null;
     // debugger;
     return html`
       <ul>
 
             ${this.taskList[this.currentListIndex].map((task) => {
-              Log(`Task-List:Render()->`)
-              Log(task)
+              console.log(`Task-List:Render()->`)
+              console.log(task)
               return html `${this._taskCard(this.tasks[String(task)])}`
               })}
 
