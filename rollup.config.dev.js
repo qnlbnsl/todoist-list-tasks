@@ -6,7 +6,7 @@ import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
 import ignore from './rollup-plugins/ignore';
-import commonjs from '@rollup/plugin-commonjs';
+
 
 import { ignoreTextfieldFiles } from './elements/ignore/textfield';
 import { ignoreSelectFiles } from './elements/ignore/select';
@@ -25,7 +25,6 @@ const serveopts = {
 
 const plugins= [
   resolve(),
-  commonjs(),
   typescript({ sourceMap: true, inlineSources: true }),
   json(),
   babel({
