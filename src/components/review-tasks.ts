@@ -1,7 +1,9 @@
 import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { IncomingTask, Projects } from '../types';
-import { Log } from '../utilities/logger';
+import { Logger } from "tslog";
+
+const log: Logger = new Logger();
 
 import './project-section';
 import './task-list'
@@ -10,7 +12,7 @@ import './task-list'
 @customElement('review-tasks')
 export class ReviewTasks extends LitElement {
   @property({attribute: false}) projectType=["Work","School","Business","Personal"]
-  @property({attribute: false}) projectAutoplay = true;
+  @property({attribute: false}) projectAutoplay = false;
   @property({attribute: false}) taskAutoplay = true;
   @state()
     private projects: Projects | undefined = undefined;
@@ -18,7 +20,7 @@ export class ReviewTasks extends LitElement {
     private numberOfTasksPerProject: number[] = [];
     private maxTasksPerList = 5;
 
-    __setVariableIndex(): void {
+    __setVariableIndex = (): void => {
     for(let i =0; i< this.projectType.length; i++){
       if(this.projects != undefined) {
         const totalTasks = Object.keys(this.projects[this.projectType[i].toLowerCase()])
@@ -28,15 +30,15 @@ export class ReviewTasks extends LitElement {
     }
   }
 
-  _updateIndex(): void {
-    Log("Updating index")
+  _updateIndex = (): void => {
+    // log.debug("_updateIndex")
     if(this.index === 3){
       this.index = 0;
     } else this.index++
     this.requestUpdate();
   }
 
-  numberOfLists(): number {
+  numberOfLists = (): number => {
     return Math.ceil(this.numberOfTasksPerProject[this.index]/this.maxTasksPerList)
   }
   // Timeout for entire project. Number of lists x 5000
@@ -48,7 +50,7 @@ export class ReviewTasks extends LitElement {
   }
 
   // https://lit.dev/docs/components/styles/
-  static get styles(): CSSResultGroup {
+  static get styles (): CSSResultGroup {
     // CSS goes here...
     return css`
       div {
@@ -71,7 +73,7 @@ export class ReviewTasks extends LitElement {
     `;
   }
 
-  section(projects: Projects, index: number, numberOfTasksPerProject: number[]): TemplateResult | null{
+  section = (projects: Projects, index: number, numberOfTasksPerProject: number[]): TemplateResult | null => {
    if(index<0 || index > this.projectType.length) return null;
 
    const key = this.projectType[index]
@@ -80,8 +82,8 @@ export class ReviewTasks extends LitElement {
    <task-list .numberOfTasks="${numberOfTasksPerProject[this.index]}" .tasks="${projects[key.toLowerCase()]}" .taskAutoplay="${this.taskAutoplay}"></task-list>
    `
   }
-  protected render(): TemplateResult {
-    Log(`Review Tasks: Autoplay is set to: ${this.projectAutoplay}`)
+  protected render = (): TemplateResult => {
+    // Log(`Review Tasks: Autoplay is set to: ${this.projectAutoplay}`)
     // TODO: Format this nicely.
     if (this.projects === undefined) return html` <h1>Good Job!!</h1> `;
     this.projectAutoplay ? this.timeout() : null

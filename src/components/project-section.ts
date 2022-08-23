@@ -27,6 +27,7 @@ export class ProjectSection extends LitElement {
     `;
   }
   protected render(): TemplateResult | void {
+    Log("------------------------------------------------------------------")
     Log(`Rendering ${this.projectKey}`)
     return html`
       <!-- Set this based on type of project -->

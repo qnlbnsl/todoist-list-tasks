@@ -7,21 +7,26 @@ import { toTaskModel } from '../utilities/modelConverter';
 // This component renders an unordered list of tasks
 @customElement('task-list')
 export class TaskList extends LitElement {
-  // Number of tasks in the object passed in from the parent
-  // Static value.
-  @property({ attribute: false }) numberOfTasks = 0;
-  // Max tasks per list. Can be overriden by parent.
-  @property({ attribute: false }) maxTasksPerList = 5;
-  // Autoadvance the list or not. can be overriden by parent.
-  @property({attribute: false}) taskAutoplay = false;
   @state()
   // Non Null, will make sure that no undefined tasks are passed in ever.
   private tasks!: { [key: string]: IncomingTask };
   // The index to identify currently shown range of tasks
   private currentListIndex = 0;
+  // private taskList: number[][] = this.buildTaskList(this.tasks);
+  // Number of tasks in the object passed in from the parent
+  // Static value.
+  @property({ attribute: false }) numberOfTasks = 0;
+  // Max tasks per list. Can be overriden by parent.
+  @property({ attribute: false }) maxTasksPerList = 5;
+   // Max tasks per list. Can be overriden by parent.
+   @property({ attribute: false }) TaskListBuilt = false;
+  // Autoadvance the list or not. can be overriden by parent.
+  @property({attribute: false}) taskAutoplay = false;
   // An array to store task IDs with list index numbers.
   // EG: [1]["1","2","3", "4"],[2]["5","6","7", "8"]
-  private taskList: number[][] = [];
+  @property({type: Array})  private taskList: number[][] = []//this.buildTaskList(this.tasks);
+
+
 
   /**
    * updates teh current list index to show the next set of tasks
@@ -29,10 +34,11 @@ export class TaskList extends LitElement {
    * @returns void
    */
   _updateIndex(): void {
-    Log('Updating task list index');
-    if (this.currentListIndex === this.numberOfLists() - 1) {
+    Log('Task-List:_updateIndex-> Updating task list index');
+    if (this.currentListIndex == this.numberOfLists()) {
       this.currentListIndex = 0;
     } else this.currentListIndex++;
+    Log(this.currentListIndex)
     this.requestUpdate();
   }
   /**
@@ -50,6 +56,7 @@ export class TaskList extends LitElement {
    */
   updateList = (): void => {
     setTimeout(() => {
+      Log("Task-List:UpdateList->updating......")
       this._updateIndex();
     }, 10000);
   };
@@ -72,18 +79,22 @@ export class TaskList extends LitElement {
     return end;
   };
 
-  private buildTaskList(tasks: { [key: string]: IncomingTask }): void {
-    Log("Setting up Task List raw data")
+  private buildTaskList(tasks: { [key: string]: IncomingTask }): number[][] {
+    const list: number[][] = [];
+    Log(`Task-List:BuildTaskList-> Setting up Task List raw data for ${this.numberOfLists()} lists `)
     const taskIds = Object.keys(tasks);
     for (let i = 0; i < this.numberOfLists(); i++) {
       // i is analogous to the current list
-      this.taskList[i] = []
+      list[i] = []
       // Log(`Loop #${i}`)
       for (let j = this.getTaskStart(i); j <= this.getTaskEnd(i); j++) {
         const id = Number(taskIds[j])
-        this.taskList[i].push(id)
+        list[i].push(id)
       }
     }
+    Log(`Task-List:BuildTaskList-> Returning List `)
+    this.TaskListBuilt = true
+    return list;
   }
 
   /**
@@ -91,6 +102,8 @@ export class TaskList extends LitElement {
    * @param  {IncomingTask} task Raw data for the task
    */
   private _taskCard(task: IncomingTask) {
+    Log(`Task-List:_taskCard->`)
+    Log(task)
     const formatted_task = toTaskModel(task);
     // Log(formatted_task)
     return html`<li>${formatted_task.content}</li>`;
@@ -108,16 +121,22 @@ export class TaskList extends LitElement {
       }
     `;
   }
-  protected render(): TemplateResult | void {
-    this.buildTaskList(this.tasks)
-    Log(`Task-List: Autoplay is set to: ${this.taskAutoplay}`)
-    this.taskAutoplay ? this.updateList() : null;
 
+  protected render(): TemplateResult | void {
+    this.TaskListBuilt ? null : this.taskList = this.buildTaskList(this.tasks)
+    // Log(`Task-List: Autoplay is set to: ${this.taskAutoplay}`)
+    this.taskAutoplay ? this.updateList() : null;
+    // debugger;
     return html`
       <ul>
-        ${this.taskList[this.currentListIndex].map((task) =>{
-          return html `${this._taskCard(this.tasks[String(task)])}`
-        })}
+
+            ${this.taskList[this.currentListIndex].map((task) => {
+              Log(`Task-List:Render()->`)
+              Log(task)
+              return html `${this._taskCard(this.tasks[String(task)])}`
+              })}
+
+
       </ul>
     `;
   }

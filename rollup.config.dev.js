@@ -6,6 +6,8 @@ import { terser } from 'rollup-plugin-terser';
 import postcss from 'rollup-plugin-postcss';
 import json from '@rollup/plugin-json';
 import ignore from './rollup-plugins/ignore';
+import commonjs from '@rollup/plugin-commonjs';
+
 import { ignoreTextfieldFiles } from './elements/ignore/textfield';
 import { ignoreSelectFiles } from './elements/ignore/select';
 import { ignoreSwitchFiles } from './elements/ignore/switch';
@@ -23,10 +25,12 @@ const serveopts = {
 
 const plugins= [
   resolve(),
-  typescript(),
+  commonjs(),
+  typescript({ sourceMap: true, inlineSources: true }),
   json(),
   babel({
     exclude: 'node_modules/**',
+    inputSourceMap: true,
   }),
   terser(),
   serve(serveopts),
@@ -39,6 +43,7 @@ const plugins= [
 export default {
   input: ['src/array-card.ts'],
   output: {
+    sourcemap: true,
     dir: './dist',
     format: 'es',
   },

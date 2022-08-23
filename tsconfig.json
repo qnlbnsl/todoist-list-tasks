@@ -8,6 +8,7 @@
       "dom",
       "dom.iterable"
     ],
+    "types": ["reflect-metadata"],
     "noEmit": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
@@ -16,6 +17,9 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "emitDecoratorMetadata": true
+
   }
 }
