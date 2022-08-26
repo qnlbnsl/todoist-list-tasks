@@ -1,6 +1,6 @@
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
+import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import { IncomingTask, Projects } from '../../types';
+import { Projects } from '../../types';
 import { IsEmpty } from '../../utilities/isEmpty';
 
 import './project-section/project-section';

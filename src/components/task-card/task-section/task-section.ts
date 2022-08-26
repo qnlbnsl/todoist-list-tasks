@@ -1,6 +1,6 @@
 import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators';
-import { IncomingTask, Projects, TaskModel } from '../../../types';
+import { IncomingTask, TaskModel } from '../../../types';
 import { toTaskModel } from '../../../utilities/modelConverter';
 import './task-list-deprecated/task-list'
 import { task_section_css } from './css';
