@@ -72,11 +72,12 @@ export class TodoCard extends LitElement {
 
   @property({
     hasChanged(value: Projects, oldValue: Projects) {
-        if (compareProjects(oldValue, value)) return true
-        else return false
+      if (compareProjects(oldValue, value)) return true;
+      else return false;
     },
-    type: Object
-  }) projects!: Projects ;
+    type: Object,
+  })
+  projects!: Projects;
 
   // Defines the state of teh custom element as config.
   // Typescript state. Lit will check if the value changes.
@@ -155,10 +156,13 @@ export class TodoCard extends LitElement {
       return this._showError(localize('common.show_error'));
     }
 
-    !this.projects ? this.projects = getProjectData(this.hass, this.config.entity as keyof typeof this.hass) : null
+    !this.projects ? (this.projects = getProjectData(this.hass, this.config.entity as keyof typeof this.hass)) : null;
 
     return html`
       <ha-card>
+        <div>
+          <h2>Tasks Review</h2>
+        </div>
         <task-card .projects="${this.projects}"></task-card>
       </ha-card>
     `;
@@ -203,7 +207,17 @@ export class TodoCard extends LitElement {
    */
   static get styles(): CSSResultGroup {
     // CSS goes here...
-    return css``;
+    return css`
+      h2 {
+        text-align: center;
+        padding-top: 10px;
+        margin-bottom: 5px;
+      }
+      ha-card {
+        margin-left: 1vw;
+        margin-right: 1vw;
+      }
+    `;
   }
 }
 
@@ -229,7 +243,12 @@ const compareProjects = (oldProj: Projects, newProj: Projects) => {
       if (oldProj.business[task] !== newProj.business[task]) {
         update = true;
       }
-    })
-  })
-  return update
-}
+    });
+  });
+  return update;
+};
+
+const compareHass = (oldVal: HomeAssistant, newVal: HomeAssistant) => {
+  console.log(oldVal);
+  console.log(newVal);
+};
