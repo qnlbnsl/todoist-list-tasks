@@ -19,7 +19,8 @@
     "resolveJsonModule": true,
     "experimentalDecorators": true,
     "sourceMap": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "useDefineForClassFields": false
 
   }
 }

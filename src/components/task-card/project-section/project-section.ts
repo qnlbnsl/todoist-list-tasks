@@ -1,6 +1,6 @@
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators';
-import { IncomingTask } from '../../types';
+import { CSSResultGroup, html, LitElement, TemplateResult } from 'lit';
+import { customElement, property } from 'lit/decorators';
+import { project_section_css } from './css';
 
 // This component renders the body of the Task List. Just a container.
 // Mainly there for the heading.
@@ -8,20 +8,15 @@ import { IncomingTask } from '../../types';
 
 @customElement('project-section')
 export class ProjectSection extends LitElement {
-  @state()
-    private projectKey = '';
-    private projectIcon = 'mdi:briefcase-clock';
+  @property() private projectIcon = 'mdi:briefcase-clock';
+  @property() projectKey = "";
+
 
   /**
    * @returns CSSResultGroup
    */
   static get styles(): CSSResultGroup {
-    return css`
-      .icon {
-        --mdc-icon-size: 3em;
-      }
-
-    `;
+    return project_section_css
   }
   /**
    * @returns TemplateResult

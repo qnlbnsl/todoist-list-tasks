@@ -64,6 +64,9 @@ export class TodoCard extends LitElement {
    * The `!` is a "Non Null Assertion Operator"
    * Basically states that hass will never be null so ignore the possibility.
    * Mainly for typescript to stop complaining.
+   *
+   *
+   * This decorator is automatically creating setters and getters
    */
   @property({ attribute: false }) public hass!: HomeAssistant;
 
@@ -88,6 +91,7 @@ export class TodoCard extends LitElement {
   private config!: TodoCardConfig;
 
   /**
+   * Called by Home Assistant when we set config / at init.
    * @param  {TodoCardConfig} config
    * @returns void
    * https://lit.dev/docs/components/properties/#accessors-custom
@@ -110,6 +114,8 @@ export class TodoCard extends LitElement {
   }
 
   /**
+   * Should we update the entire card.
+   * Only happens when we change the config.
    * @param  {PropertyValues} changedProps
    * @returns boolean
    * https://lit.dev/docs/components/lifecycle/#reactive-update-cycle-performing
@@ -136,6 +142,10 @@ export class TodoCard extends LitElement {
    * https://lit.dev/docs/components/rendering/
    */
   protected render(): TemplateResult | void {
+    // Safety Check.
+    if (!this.config || !this.hass || !this.projects) {
+      return html``;
+    }
     // TODO Check for stateObj or other necessary things and render a warning if missing
     if (this.config.show_warning) {
       return this._showWarning(localize('common.show_warning'));
